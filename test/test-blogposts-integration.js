@@ -4,6 +4,7 @@ const chai = require('chai');
 const chaiHttp = require('chai-http');
 const faker = require('faker');
 const mongoose = require('mongoose');
+const mocha = require('mocha');
 
 const expect = chai.expect;
 
@@ -18,22 +19,34 @@ function seedBlogPostData() {
   const seedData = [];
 
   for (let i=1; i<=10; i++) {
-    seedData.push(generateBlogPostData());
-  }
-  return BlogPost.insertMany(seedData);
+      seedData.push({
+          author: {
+            firstName: faker.name.firstName(),
+            lastName: faker.name.lastName()
+          },
+          title: faker.lorem.words(),
+          content: faker.lorem.paragraph(),
+          created: faker.date.past()
+        });
+  //   seedData.push(generateBlogPostData());
+  // }
+  console.log(seedData);
+}
+return BlogPost.insertMany(seedData);
+
 }
 
-function generateBlogPostData() {
-  return {
-    author: {
-      firstName: faker.firstName.firstName(),
-      lastName: faker.lastName.lastName()
-    }
-    title: faker.title.catchPhrase(),
-    content: faker.content.paragraph(),
-    created: faker.date.past()
-  };
-}
+// // function generateBlogPostData() {
+//   return {
+//     author: {
+//       firstName: faker.name.firstName(),
+//       lastName: faker.name.lastName()
+//     },
+//     title: faker.lorem.words(),
+//     content: faker.lorem.paragraph(),
+//     created: faker.date.past()
+//   };
+// }
 
 function tearDownDb() {
   console.warn('Deleting database');
@@ -65,7 +78,7 @@ describe('BlogPost API resource', function() {
         .then(function(_res) {
           res = _res;
           expect(res).to.have.status(200);
-          expect(res.body.).to.have.length.of.at.least(1);
+          expect(res.body).to.have.length.of.at.least(1);
           return BlogPost.count();
         })
         .then(function(count) {
@@ -141,7 +154,7 @@ describe('BlogPost API resource', function() {
         author: {
           firstName: 'Josefus',
           lastName: 'Marmaduke'
-        }
+        },
         title: 'Lame Ducks: a True Story'
       };
 

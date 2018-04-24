@@ -6,7 +6,8 @@ const faker = require('faker');
 const mongoose = require('mongoose');
 const mocha = require('mocha');
 
-const expect = chai.expect;
+const expect = chai.expect();
+// const should = chai.should();
 
 const {BlogPost} = require('../models');
 const {app, runServer, closeServer} = require('../server');

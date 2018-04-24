@@ -95,7 +95,7 @@ describe('BlogPost API resource', function() {
           expect(res).to.have.status(200);
           expect(res).to.be.json;
           expect(res.body.blogPosts).to.be.a('array');
-          expect(res.body.blogPosts).to.have.length.of.at.least(1);
+          expect(res.body.blogPosts).to.have.lengthOf.at.least(1);
 
           res.body.blogPosts.forEach(function(blogPost) {
             expect(blogPost).to.be.a('object');
@@ -152,7 +152,6 @@ describe('BlogPost API resource', function() {
     it('should update fields you send over', function() {
       const updateData = {
         author: {
-          $init: true,
           firstName: 'Josefus',
           lastName: 'Marmaduke'
         },
